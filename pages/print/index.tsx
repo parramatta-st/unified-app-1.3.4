@@ -78,7 +78,7 @@ export default function PrintPage() {
             <input value={student} onChange={e=>setStudent(e.target.value)} placeholder="e.g. Charlotte" className="w-full rounded-md bg-neutral-900 border border-neutral-800 px-3 py-2" />
           </div>
           <button onClick={refresh} className="px-3 py-2 rounded-md bg-neutral-800 border border-neutral-700 hover:bg-neutral-700">Refresh</button>
-          {message and <div className="text-sm text-neutral-300">{message}</div>}
+          {message && <div className="text-sm text-neutral-300">{message}</div>}
         </div>
 
         {groups.map(g => (

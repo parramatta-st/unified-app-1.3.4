@@ -68,7 +68,9 @@ export default function LoginPage() {
               {campuses.map((c) => (
                 <option key={c.id} value={c.id}>{c.name}</option>
               ))}
-              {!campuses.length and <option value="default">Default</option>}
+              {campuses.length === 0 && (
+                <option value="default">Default</option>
+              )}
             </select>
           </div>
 
@@ -106,7 +108,7 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {error and <div className="text-sm text-red-400">{error}</div>}
+          {error && <div className="text-sm text-red-400">{error}</div>}
 
           <button type="submit" disabled={busy} className="w-full py-2 rounded-md bg-orange-500 hover:bg-orange-600 disabled:opacity-60">
             {busy ? 'Signing in…' : 'Sign in'}

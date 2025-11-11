@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 
 type Campus = { id:string; name:string; contacts?:string; curriculum?:string; tutors?:string[] };
@@ -12,17 +12,14 @@ export default function LoginPage() {
   const router = useRouter();
   const campuses = useMemo(() => getCampuses(), []);
   const nextPath = (router.query.next as string) || '/print';
+  const defaultCampusId = campuses[0]?.id ?? (campuses.length === 0 ? 'default' : '');
 
-  const [campusId, setCampusId] = useState<string>(() => campuses[0]?.id || '');
+  const [campusId, setCampusId] = useState<string>(defaultCampusId);
   const [tutor, setTutor] = useState('');
   const [password, setPassword] = useState('');
   const [showPwd, setShowPwd] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-
-  useEffect(() => {
-    if (!campusId && campuses.length) setCampusId(campuses[0].id);
-  }, [campuses, campusId]);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -65,6 +62,9 @@ export default function LoginPage() {
               className="w-full rounded-md bg-neutral-800 border border-neutral-700 px-3 py-2"
               required
             >
+              {campuses.length > 0 && (
+                <option value="" disabled>Select campus…</option>
+              )}
               {campuses.map((c) => (
                 <option key={c.id} value={c.id}>{c.name}</option>
               ))}
